@@ -1,0 +1,17 @@
+/* 🏢 Publishers Page Styles (publishers.css) */
+
+.publisher-id, .author-id {
+  font-family: "Courier New", monospace;
+  font-weight: 500;
+  color: var(--primary-color);
+}
+
+.publisher-name, .author-name {
+  font-weight: 600;
+  color: var(--primary-color);
+}
+
+.contact-text, .contact-text {
+  color: #6c757d;
+  font-size: 0.95rem;
+}

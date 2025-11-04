@@ -1,0 +1,13 @@
+/* 📘 Books Page Styles (books.css) */
+
+.isbn-text {
+  font-family: "Courier New", monospace;
+  font-weight: 500;
+  color: var(--primary-color);
+}
+
+.price {
+  font-weight: 600;
+  color: var(--accent-color);
+  font-size: 1.1rem;
+}
