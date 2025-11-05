@@ -23,17 +23,33 @@ app.use(express.static(path.join(__dirname, "public")));
 app.get(
   "/",
   wrapAsync(async (req, res) => {
-    const [bookResult, authorResult, publisherResult] = await Promise.all([
-      db.one("SELECT COUNT(*) AS total_books FROM book"),
-      db.one("SELECT COUNT(*) AS total_authors FROM author"),
-      db.one("SELECT COUNT(*) AS total_publishers FROM publisher"),
-    ]);
+    const [bookResult, authorResult, publisherResult, recentBooks] =
+      await Promise.all([
+        db.one("SELECT COUNT(*) AS total_books FROM book"),
+        db.one("SELECT COUNT(*) AS total_authors FROM author"),
+        db.one("SELECT COUNT(*) AS total_publishers FROM publisher"),
+        db.any(
+          `SELECT 
+              b.title,
+              b.isbn,
+              b.year,
+              b.price,
+              a.name AS author_name,
+              b.publisher_name
+           FROM book b
+           JOIN bookauthor ba ON b.isbn = ba.book_isbn
+           JOIN author a ON ba.author_id = a.author_id
+           ORDER BY b.year DESC
+           LIMIT 3;`
+        ),
+      ]);
 
     res.render("home.ejs", {
       activePage: "home",
       totalBooks: parseInt(bookResult.total_books, 10),
       totalAuthors: parseInt(authorResult.total_authors, 10),
       totalPublishers: parseInt(publisherResult.total_publishers, 10),
+      recentBooks,
     });
   })
 );
@@ -93,8 +109,10 @@ app.get(
   })
 );
 
-app.post("/books", async (req, res, next) => {
-  try {
+app.post(
+  "/books",
+  validateBook,
+  wrapAsync(async (req, res) => {
     const { title, isbn, author_id, publisher_name, publication_year, price } =
       req.body.book;
 
@@ -108,16 +126,13 @@ app.post("/books", async (req, res, next) => {
     // Insert into the BookAuthor table (link author to this book)
     await db.none(
       `INSERT INTO bookauthor (author_id, book_isbn)
-      VALUES ($1, $2)`,
+       VALUES ($1, $2)`,
       [author_id, isbn]
     );
 
     res.redirect("/books");
-  } catch (err) {
-    console.error("🔥 Error inserting book:", err);
-    next(err);
-  }
-});
+  })
+);
 
 // ---------- Authors ----------
 app.get(
@@ -169,6 +184,8 @@ app.post(
     res.redirect("/publishers");
   })
 );
+
+
 
 // ---------- Error Handler ----------
 app.use(errorHandler);

@@ -2,13 +2,14 @@
 <link rel="stylesheet" href="/css/authAndPub.css" />
 <link rel="stylesheet" href="/css/style.css" />
 
-<section class="page-header">
-  <div class="container">
+<section class="page-header d-flex justify-content-between align-items-center">
+  <div class="container d-flex justify-content-between align-items-center">
     <h1>🏢 All Publishers</h1>
+    <a href="/publishers/new" class="btn btn-dark btn-lg">New Publisher</a>
   </div>
 </section>
 
-<div class="container">
+<div class="container mt-4">
   <% if (publishers && publishers.length > 0) { %>
   <div class="table-container">
     <div class="table-responsive">
@@ -37,7 +38,7 @@
             </td>
             <td>
               <div class="actions-cell d-flex gap-2">
-                <!-- Edit Button -->
+                <!-- ✏️ Edit Button -->
                 <a
                   href="/publishers/edit/<%= publisher.publisher_id %>"
                   class="btn btn-sm btn-warning-custom"
@@ -45,7 +46,7 @@
                   Edit
                 </a>
 
-                <!-- Delete Button -->
+                <!-- 🗑️ Delete Button -->
                 <form
                   method="POST"
                   action="/publishers/delete/<%= publisher.publisher_id %>"
@@ -69,6 +70,7 @@
     <div class="empty-state-icon">📭</div>
     <h2>No publishers found in the system.</h2>
     <p>Start by adding your first publisher to get started.</p>
+    <a href="/publishers/new" class="btn btn-dark mt-3">Add Publisher</a>
   </div>
   <% } %>
 </div>

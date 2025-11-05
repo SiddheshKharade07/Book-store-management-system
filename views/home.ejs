@@ -1,9 +1,10 @@
 <% layout("/layouts/boilerplate") %>
 <link rel="stylesheet" href="/css/home.css" />
+
 <section class="hero-section">
   <div class="container">
     <h1>📚 BookStore Management System</h1>
-    <p>Manage your inventory, authors, and customers with ease.</p>
+    <p>Manage your inventory, authors, and publishers with ease.</p>
     <div>
       <a href="/books/all" class="btn btn-light btn-lg cta-button"
         >View Books</a
@@ -42,50 +43,30 @@
 
 <section class="recent-books-section">
   <div class="container">
-    <h2 class="section-title">Recent Books</h2>
+    <h2 class="section-title">📖 Most Recently Released Books</h2>
     <div class="row g-4">
-      <div class="col-lg-2 col-md-4 col-sm-6">
-        <div class="card book-card">
-          <img
-            src="https://placehold.co/200x250"
-            class="book-cover"
-            alt="Book Title"
-          />
+      <% if (recentBooks && recentBooks.length > 0) { %> <%
+      recentBooks.forEach(book => { %>
+      <div class="col-lg-3 col-md-4 col-sm-6">
+        <div class="card book-card text-center p-3">
           <div class="book-card-body">
-            <h5 class="book-title">The Great Gatsby</h5>
-            <p class="book-author">F. Scott Fitzgerald</p>
-            <p class="book-price">$9.99</p>
+            <h5 class="book-title"><%= book.title %></h5>
+            <p class="book-author">
+              <strong>Author:</strong> <%= book.author_name %>
+            </p>
+            <p><strong>Publisher:</strong> <%= book.publisher_name %></p>
+            <p><strong>Year:</strong> <%= book.year %></p>
+            <p class="book-price">
+              <strong>Price:</strong> ₹<%= (book.price) %>
+            </p>
           </div>
         </div>
       </div>
-      <div class="col-lg-2 col-md-4 col-sm-6">
-        <div class="card book-card">
-          <img
-            src="https://placehold.co/200x250"
-            class="book-cover"
-            alt="Book Title"
-          />
-          <div class="book-card-body">
-            <h5 class="book-title">1984</h5>
-            <p class="book-author">George Orwell</p>
-            <p class="book-price">$12.50</p>
-          </div>
-        </div>
+      <% }) %> <% } else { %>
+      <div class="text-center mt-4">
+        <p>No recently released books found.</p>
       </div>
-      <div class="col-lg-2 col-md-4 col-sm-6">
-        <div class="card book-card">
-          <img
-            src="https://placehold.co/200x250"
-            class="book-cover"
-            alt="Book Title"
-          />
-          <div class="book-card-body">
-            <h5 class="book-title">To Kill a Mockingbird</h5>
-            <p class="book-author">Harper Lee</p>
-            <p class="book-price">$8.75</p>
-          </div>
-        </div>
-      </div>
+      <% } %>
     </div>
   </div>
 </section>
