@@ -126,22 +126,22 @@ A full-stack **Book Store Management System** built with **Node.js**, **Express*
 ```bash
 git clone https://github.com/SiddheshKharade07/Book-store-management-system.git
 ```
-2.Navigate into the project directory:
+2. Navigate into the project directory:
 ```bash
 cd Book-store-management-system
 ```
-3.Install dependencies:
+3. Install dependencies:
 ```bash
 npm install
 ```
-4.Set up your PostgreSQL database and configure connection in db.js.
+4. Set up your PostgreSQL database and configure connection in db.js.
 
 
-5.Run the app:
+5. Run the app:
 ```bash
 npm start
 ```
-6.Open your browser at:
+6. Open your browser at:
 ```bash
 http://localhost:8080
 ```
