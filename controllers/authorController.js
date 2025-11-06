@@ -43,7 +43,23 @@ module.exports.updateAuthor = async (req, res) => {
 
 module.exports.deleteAuthor = async (req, res) => {
   const { id } = req.params;
+
+  // Get all books written by this author
+  const books = await db.any(
+    "SELECT book_isbn FROM bookauthor WHERE author_id=$1",
+    [id]
+  );
+
+  // Delete book-author relations
   await db.none("DELETE FROM bookauthor WHERE author_id=$1", [id]);
+
+  // Delete the books from book table
+  for (const book of books) {
+    await db.none("DELETE FROM book WHERE isbn=$1", [book.book_isbn]);
+  }
+
+  // Delete the author
   await db.none("DELETE FROM author WHERE author_id=$1", [id]);
+
   res.redirect("/authors");
 };
