@@ -8,8 +8,9 @@
       <% if (searchType === "author") { %> 📖 Books written by "<%= searchTerm
       %>" <% } else if (searchType === "publisher") { %> 📖 Books published by
       "<%= searchTerm %>" <% } else if (searchType === "isbn") { %> 📖 Book with
-      ISBN "<%= searchTerm %>" <% } else { %> 📖 Search Results for "<%=
-      searchTerm %>" <% } %>
+      ISBN "<%= searchTerm %>" <% } else if (searchType === "book name") { %> 📖
+      Book with Book Name "<%= searchTerm %>" <% } else { %> 📖 Search Results
+      for "<%= searchTerm %>" <% } %>
     </h2>
 
     <div class="row g-4 mt-3">
@@ -36,7 +37,7 @@
 
     <% } else { %>
     <h2 class="section-title">No results found</h2>
-    <div class="text-center mt-4 mb-5 " style="height:20vh;">
+    <div class="text-center mt-4 mb-5" style="height: 20vh">
       <p class="mb-5">No books found for "<%= searchTerm %>".</p>
     </div>
     <% } %>
